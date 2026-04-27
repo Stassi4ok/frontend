@@ -15,9 +15,8 @@ export default function AppRoutes() {
       {/* PUBLIC */}
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Login />} />
-      {/* PROTECTED (ALL AUTH USERS) */}
 
-
+      {/* PROTECTED */}
       <Route
         path="/students"
         element={
@@ -36,7 +35,7 @@ export default function AppRoutes() {
         }
       />
 
-      {/* ADMIN ONLY */}
+      {/* ADMIN */}
       <Route
         path="/admin"
         element={
@@ -47,6 +46,9 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+      {/* 404 */}
+      <Route path="*" element={<h1>404 - Not Found</h1>} />
     </Routes>
   );
 }
