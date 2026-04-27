@@ -104,7 +104,11 @@ body {
 .input:focus {
   border-color: #2563eb;
 }
-
+.auth-error {
+  color: #ff4d4f;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
 /* BUTTON */
 .btn {
   margin-top: 10px;
