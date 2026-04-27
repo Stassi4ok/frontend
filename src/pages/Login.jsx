@@ -9,19 +9,36 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handle = async () => {
+  const handle = async (e) => {
+    e.preventDefault();
     await login(email, password);
-    nav("/dashboard");
+    nav("/students");
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="auth-page">
+      <form className="auth-card" onSubmit={handle}>
+        <h2 className="auth-title">Вхід в систему</h2>
 
-      <input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="password" type="password" onChange={(e) => setPassword(e.target.value)} />
+        <input
+          className="auth-input"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handle}>Login</button>
+        <input
+          className="auth-input"
+          placeholder="Пароль"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="auth-button" type="submit">
+          Увійти
+        </button>
+      </form>
     </div>
   );
 }

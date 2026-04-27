@@ -4,9 +4,17 @@ import {
   updateUserRole,
   deleteUser
 } from "../api/user";
-
+import { registerRequest } from "../api/auth";
+import "./pageStyle/admin.css"
 export default function Admin() {
   const [users, setUsers] = useState([]);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "user"
+  });
 
   const loadUsers = async () => {
     const res = await getUsers();
@@ -27,45 +35,120 @@ export default function Admin() {
     loadUsers();
   };
 
+  const handleCreateUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      await registerRequest(form);
+      setForm({ name: "", email: "", password: "", role: "user" });
+      loadUsers();
+    } catch (e) {
+      console.error(e);
+      alert("Помилка створення користувача");
+    }
+  };
+
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Users (Admin Panel)</h2>
+    <div className="page">
 
-      <table border="1" cellPadding="10">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      <h2 className="title">Адміністрація користувачів</h2>
 
-        <tbody>
-          {users.map((u) => (
-            <tr key={u._id}>
-              <td>{u.email}</td>
+      {/* Форма */}
+      <div className="card">
+        <h3>Створити користувача</h3>
 
-              <td>
-                <select
-                  value={u.role}
-                  onChange={(e) =>
-                    handleRoleChange(u._id, e.target.value)
-                  }
-                >
-                  <option value="user">user</option>
-                  <option value="admin">admin</option>
-                </select>
-              </td>
+        <form className="admin-form" onSubmit={handleCreateUser}>
+          <input
+            className="input"
+            placeholder="Ім’я"
+            value={form.name}
+            onChange={(e) =>
+              setForm({ ...form, name: e.target.value })
+            }
+          />
 
-              <td>
-                <button onClick={() => handleDelete(u._id)}>
-                  Delete
-                </button>
-              </td>
+          <input
+            className="input"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
+          />
+
+          <input
+            className="input"
+            type="password"
+            placeholder="Пароль"
+            value={form.password}
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
+          />
+
+          <select
+            className="input"
+            value={form.role}
+            onChange={(e) =>
+              setForm({ ...form, role: e.target.value })
+            }
+          >
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+
+          <button className="btn-add">Створити</button>
+        </form>
+      </div>
+
+      {/* Таблиця */}
+      <div className="card">
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Ім’я</th>
+              <th>Email</th>
+              <th>Роль</th>
+              <th>Дії</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {users.map((u) => (
+              <tr key={u._id}>
+                <td>{u.name}</td>
+                <td>{u.email}</td>
+
+                <td>
+                  <select
+                    className="input"
+                    value={u.role}
+                    onChange={(e) =>
+                      handleRoleChange(u._id, e.target.value)
+                    }
+                  >
+                    <option value="user">user</option>
+                    <option value="admin">admin</option>
+                  </select>
+                </td>
+
+                <td>
+                  <button
+                    className="btn-small danger"
+                    onClick={() => handleDelete(u._id)}
+                  >
+                    Видалити
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+
+      </div>
+
     </div>
   );
 }

@@ -6,7 +6,10 @@ export default function App() {
   return (
     <>
       <Header />
-      <AppRoutes />
+      <div className="page-main">
+        <AppRoutes />
+      </div>
+      
     </>
   );
 }

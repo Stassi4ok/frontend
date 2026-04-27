@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import "./header.css"
 
 export default function Header() {
-  const { isAuth, logout , user} = useAuth();
+  const { isAuth, logout, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -10,66 +11,46 @@ export default function Header() {
     navigate("/login");
   };
 
+  const getLinkClass = ({ isActive }) =>
+    isActive
+      ? "header__link header__link--active"
+      : "header__link";
+
   return (
-    <header style={styles.header}>
-      <div style={styles.logo}>University System</div>
+    <header className="header">
 
-      <nav style={styles.nav}>
+      <div className="header__logo">
+        Облік студентів
+      </div>
 
-      
-        <Link to="/students" style={styles.link}>
-          Students
-        </Link>
+      <nav className="header__nav">
 
-        <Link to="/journal" style={styles.link}>
-          Journal
-        </Link>
+        <NavLink to="/students" className={getLinkClass}>
+          Студенти
+        </NavLink>
+
+        <NavLink to="/journal" className={getLinkClass}>
+          Журнали
+        </NavLink>
 
         {user?.role === "admin" && (
-          <Link to="/admin" style={styles.link}>Users</Link>
+          <NavLink to="/admin" className={getLinkClass}>
+            Користувачі
+          </NavLink>
         )}
 
         {!isAuth ? (
-          <Link to="/login" style={styles.link}>
-            Login
-          </Link>
+          <NavLink to="/login" className={getLinkClass}>
+            Увійти
+          </NavLink>
         ) : (
-          <button onClick={handleLogout} style={styles.button}>
-            Logout
+          <button className="header__button" onClick={handleLogout}>
+            Вийти
           </button>
         )}
+
       </nav>
+
     </header>
   );
 }
-
-const styles = {
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "15px 20px",
-    background: "#1f2937",
-    color: "white",
-    alignItems: "center",
-  },
-  logo: {
-    fontSize: "18px",
-    fontWeight: "bold",
-  },
-  nav: {
-    display: "flex",
-    gap: "15px",
-    alignItems: "center",
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-  },
-  button: {
-    background: "red",
-    color: "white",
-    border: "none",
-    padding: "5px 10px",
-    cursor: "pointer",
-  },
-};

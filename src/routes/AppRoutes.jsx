@@ -16,14 +16,7 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
 
       {/* PROTECTED (ALL AUTH USERS) */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
+
 
       <Route
         path="/students"

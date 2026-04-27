@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #0f172a;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.header__logo {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__link {
+  position: relative;
+  text-decoration: none;
+  color: #cbd5f5;
+  font-weight: 500;
+  padding: 6px 4px;
+  transition: all 0.2s ease;
+}
+
+/* hover */
+.header__link:hover {
+  color: #fff;
+}
+
+/* underline animation */
+.header__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+.header__link:hover::after {
+  width: 100%;
+}
+
+/* ACTIVE */
+.header__link--active {
+  color: #fff;
+}
+
+.header__link--active::after {
+  width: 100%;
+}
+
+/* BUTTON */
+.header__button {
+  background: #ef4444;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.header__button:hover {
+  background: #dc2626;
+}

@@ -17,13 +17,12 @@ export default function Students() {
     program: "",
     studyTerm: ""
   });
-  const [editId, setEditId] = useState(null);
 
+  const [editId, setEditId] = useState(null);
   const [filterField, setFilterField] = useState("name");
   const [filterValue, setFilterValue] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  // LOAD
   const loadStudents = async () => {
     const res = await getStudents();
     setStudents(res.data);
@@ -33,12 +32,10 @@ export default function Students() {
     loadStudents();
   }, []);
 
-  // INPUT CHANGE
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // SUBMIT (CREATE / UPDATE)
   const handleSubmit = async () => {
     if (editId) {
       await updateStudent(editId, form);
@@ -47,21 +44,24 @@ export default function Students() {
       await createStudent(form);
     }
 
-    setForm({ name: "", email: "", group: "" });
+    setForm({
+      name: "",
+      email: "",
+      group: "",
+      course: "",
+      specialty: "",
+      program: "",
+      studyTerm: ""
+    });
+
     loadStudents();
   };
 
-  // EDIT
   const handleEdit = (student) => {
-    setForm({
-      name: student.name,
-      email: student.email,
-      group: student.group,
-    });
+    setForm(student);
     setEditId(student._id);
   };
 
-  // DELETE
   const handleDelete = async (id) => {
     await deleteStudent(id);
     loadStudents();
@@ -70,7 +70,6 @@ export default function Students() {
   const filteredStudents = students
     .filter((s) => {
       if (!filterValue) return true;
-
       return String(s[filterField])
         .toLowerCase()
         .includes(filterValue.toLowerCase());
@@ -78,61 +77,51 @@ export default function Students() {
     .sort((a, b) => {
       const aVal = a[filterField];
       const bVal = b[filterField];
-
-      if (sortOrder === "asc") {
-        return aVal > bVal ? 1 : -1;
-      } else {
-        return aVal < bVal ? 1 : -1;
-      }
+      return sortOrder === "asc" ? (aVal > bVal ? 1 : -1) : (aVal < bVal ? 1 : -1);
     });
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Студенти CRUD</h2>
+    <div className="page">
+
+      <h2 className="title">Студенти</h2>
 
       {/* FORM */}
-      <div style={{ marginBottom: 20 }}>
-        <input name="name" placeholder="ПІБ" value={form.name} onChange={handleChange} />
-        <input name="email" placeholder="Електронна пошта" value={form.email} onChange={handleChange} />
-        <input name="group" placeholder="Група" onChange={handleChange} />
-        <input name="course" placeholder="Курс (1-6)" value={form.course} onChange={handleChange} />
+      <div className="card">
+        <div className="grid">
 
-        <input name="specialty" placeholder="Спеціальність" value={form.specialty} onChange={handleChange} />
+          <input className="input" name="name" placeholder="ПІБ" value={form.name} onChange={handleChange} />
+          <input className="input" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
+          <input className="input" name="group" placeholder="Група" value={form.group} onChange={handleChange} />
+          <input className="input" name="course" placeholder="Курс" value={form.course} onChange={handleChange} />
+          <input className="input" name="specialty" placeholder="Спеціальність" value={form.specialty} onChange={handleChange} />
+          <input className="input" name="program" placeholder="Програма" value={form.program} onChange={handleChange} />
+          <input className="input" name="studyTerm" placeholder="Термін  навчання" value={form.studyTerm} onChange={handleChange} />
 
-        <input name="program" placeholder="Освітня програма" value={form.program} onChange={handleChange} />
+        </div>
 
-        <input name="studyTerm" placeholder="Термін навчання (наприклад 4 роки)" value={form.studyTerm} onChange={handleChange} />
-
-        <button onClick={handleSubmit}>
+        <button className="btn" onClick={handleSubmit}>
           {editId ? "Оновити" : "Додати"}
         </button>
       </div>
 
-      <div style={{ marginBottom: 20 }}>
+      {/* FILTER */}
+      <div className="card row">
 
-        {/* SELECT FIELD */}
-        <select
-          value={filterField}
-          onChange={(e) => setFilterField(e.target.value)}
-        >
-          <option value="name">Ім'я</option>
+        <select className="input" value={filterField} onChange={(e) => setFilterField(e.target.value)}>
+          <option value="name">ПІБ</option>
           <option value="course">Курс</option>
           <option value="specialty">Спеціальність</option>
           <option value="program">Програма</option>
         </select>
 
-        {/* VALUE INPUT */}
         <input
-          placeholder="Значення фільтра"
+          className="input"
+          placeholder="Фільтр"
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
 
-        {/* SORT */}
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
+        <select className="input" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
           <option value="asc">Зростання</option>
           <option value="desc">Спадання</option>
         </select>
@@ -140,39 +129,42 @@ export default function Students() {
       </div>
 
       {/* TABLE */}
-      <table border="1" cellPadding="10">
-        <thead>
-          <tr>
-            <th>ПІБ</th>
-            <th>Електронна пошта</th>
-            <th>Група</th>
-            <th>Курс</th>
-            <th>Спеціальність</th>
-            <th>Програма</th>
-            <th>Термін навчання</th>
-            <th>Дії</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {filteredStudents.map((s) => (
-            <tr key={s._id}>
-              <td>{s.name}</td>
-              <td>{s.email}</td>
-              <td>{s.group}</td>
-              <td>{s.course}</td>
-              <td>{s.specialty}</td>
-              <td>{s.program}</td>
-              <td>{s.studyTerm}</td>
-
-              <td>
-                <button onClick={() => handleEdit(s)}>Редагувати</button>
-                <button onClick={() => handleDelete(s._id)}>Видалити</button>
-              </td>
+      <div className="card">
+        <table className="table">
+          <thead>
+            <tr >
+              <th >ПІБ</th>
+              <th>Email</th>
+              <th>Група</th>
+              <th>Курс</th>
+              <th>Спеціальність</th>
+              <th>Освітня програма</th>
+              <th>Термін навчання</th>
+              <th>Дії</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {filteredStudents.map((s) => (
+              <tr key={s._id}>
+                <td>{s.name}</td>
+                <td>{s.email}</td>
+                <td>{s.group}</td>
+                <td>{s.course}</td>
+                <td>{s.specialty}</td>
+                <td>{s.program}</td>
+                <td>{s.studyTerm}</td>
+                <td className="actions">
+                  <button className="btn-small" onClick={() => handleEdit(s)}>Редагувати</button>
+                  <button className="btn-small danger" onClick={() => handleDelete(s._id)}>Видалити</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+      </div>
+
     </div>
   );
 }
