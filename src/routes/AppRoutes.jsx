@@ -14,7 +14,7 @@ export default function AppRoutes() {
     <Routes>
       {/* PUBLIC */}
       <Route path="/login" element={<Login />} />
-
+      <Route path="/" element={<Login />} />
       {/* PROTECTED (ALL AUTH USERS) */}
 
 
