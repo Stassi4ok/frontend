@@ -24,7 +24,7 @@ export default function Login() {
       } else if (err.response?.status === 404) {
         setError("Користувача не знайдено");
       } else {
-        setError("Помилка сервера. Спробуйте пізніше");
+        setError("Невірний email або пароль");
       }
     }
   };
