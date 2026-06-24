@@ -1,16 +1,67 @@
-# React + Vite
+# 🎓 Student Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📖 Project Description
 
-Currently, two official plugins are available:
+This thesis project is dedicated to the development of a **Student Management System**, which automates the process of managing student data within an educational institution. The system provides convenient storage, editing, and viewing of information about students, groups, academic performance, and other educational data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The main goal of the project is to improve the efficiency of administrative processes in education and reduce manual work when handling student information.
 
-## React Compiler
+## ✨ Main Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* User registration and authentication
+* Role management (administrator, teacher)
+* Add, edit, and delete students
+* Manage academic groups
+* Track student performance
+* Search and filter students
+* Admin panel for system management
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+
+* React
+* HTML5
+* CSS3
+* JavaScript
+
+### Backend *(if applicable — can be adjusted)*
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+
+## 📐 System Architecture
+
+The project is built using a client-server architecture:
+
+* **Frontend** — responsible for the user interface
+* **Backend** — handles requests and business logic
+* **Database** — stores student data
+
+## 🎯 Project Goals
+
+* Automate student record management
+* Improve access to educational information
+* Optimize administrative processes
+* Reduce errors in data handling
+
+## 🚀 System Login Credentials
+
+To log into the system, you can use:
+
+* **Login:** test@test.com
+* **Password:** 123456
+
+## 👨‍🎓 Diploma Information
+
+**Project Title:** Student Management System
+**Level:** Bachelor Thesis
+**Year:** 2026
+
+## 📄 License
+
+This project was created for educational purposes as a diploma thesis and is not intended for commercial use.
